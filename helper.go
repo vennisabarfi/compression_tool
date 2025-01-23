@@ -23,14 +23,16 @@ func FileCompressor(filename string) {
 	// }
 
 	// fmt.Println(buffer)
+	// snippet that receives a string and outputs the frequency of each character
+	// off to optimize for files probably using buffer instead of string?
 	s := "namm"
-	// create a map of runes to ints and increase values as we iterate over a given string
-	counter := make(map[rune]int)
-
-	for _, c := range s {
-		if c != ' ' {
-			counter[c] += 1
-		}
+	frequency := make(map[rune]int)
+	for _, char := range s {
+		frequency[char] = frequency[char] + 1
 	}
-	fmt.Println(counter)
+
+	for char, count := range frequency {
+		fmt.Printf("%c: %d\n", char, count)
+	}
+
 }
