@@ -2,8 +2,26 @@ package main
 
 import (
 	"fmt"
+	"log"
 	"os"
 )
+
+func frequencyCounter(filename string) (frequency map[rune]int) {
+	buffer, err := os.ReadFile(filename)
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	// convert buffer into string for counter
+	s := string(buffer)
+	// frequency counter that creates a map of runes and integers
+	frequency = make(map[rune]int)
+	// iterate over string and create count
+	for _, char := range s {
+		frequency[char] = frequency[char] + 1
+	}
+	return frequency
+}
 
 func FileCompressor(filename string) {
 	file, err := os.Open(filename)
@@ -17,20 +35,8 @@ func FileCompressor(filename string) {
 		}
 	}()
 
-	// buffer, err := os.ReadFile(filename)
-	// if err != nil {
-	// 	log.Fatal(err)
-	// }
-
-	// fmt.Println(buffer)
-	// snippet that receives a string and outputs the frequency of each character
-	// off to optimize for files probably using buffer instead of string?
-	s := "namm"
-	frequency := make(map[rune]int)
-	for _, char := range s {
-		frequency[char] = frequency[char] + 1
-	}
-
+	// extract frequency using frequency counter function
+	frequency := frequencyCounter(filename)
 	for char, count := range frequency {
 		fmt.Printf("%c: %d\n", char, count)
 	}
