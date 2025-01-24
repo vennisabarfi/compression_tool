@@ -10,10 +10,10 @@ type Node struct {
 
 // https://reintech.io/blog/comprehensive-guide-huffman-coding-algorithm-go
 
-//  implementing algo by creating a priority queue. Ordering queue according to the frequency of the characters
+// implementing algo by creating a priority queue. Ordering queue according to the frequency of the characters
 type PriorityQueue []*Node
 
-//  length of queue
+// length of queue
 func (pq PriorityQueue) Len() int {
 	return len(pq)
 }
@@ -28,7 +28,16 @@ func (pq PriorityQueue) Swap(i, j int) {
 }
 
 // push on to heap
-func (pq PriorityQueue) Push(x interface{}) {
+func (pq *PriorityQueue) Push(x interface{}) {
 
-	pq = append(pq, x.(*Node))
+	*pq = append(*pq, x.(*Node))
+}
+
+// pop from heap
+func (pq *PriorityQueue) Pop() interface{} {
+	old := *pq
+	n := len(old)
+	item := old[n-1]
+	*pq = old[0 : n-1]
+	return item
 }
