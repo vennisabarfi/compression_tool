@@ -20,13 +20,15 @@ func frequencyCounter(filename string) (frequency map[rune]int) {
 	for _, char := range s {
 		frequency[char] = frequency[char] + 1
 	}
+	// return sorted frequency? work on this
 	return frequency
+
 }
 
 func FileCompressor(filename string) {
 	file, err := os.Open(filename)
 	if err != nil {
-		panic(err)
+		log.Fatal("Error opening file", err)
 	}
 	// check for error to be returned and exit if file not found
 	defer func() {
