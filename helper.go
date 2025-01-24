@@ -58,6 +58,19 @@ func BuildTree(pq *PriorityQueue) *Node {
 	return heap.Pop(pq).(*Node)
 }
 
+// traverse the tree (preorder) and then print
+func PrintTree(node *Node) {
+	if node == nil {
+		return
+	}
+	// Print current node
+	fmt.Println(node.count)
+
+	// recursively print left and right subtree (preorder traversal)
+	PrintTree((node.left))
+	PrintTree(node.right)
+}
+
 func FileCompressor(filename string) {
 	file, err := os.Open(filename)
 	if err != nil {
@@ -71,9 +84,17 @@ func FileCompressor(filename string) {
 	}()
 
 	// extract frequency using frequency counter function
-	frequency, _ := frequencyCounter(filename)
+	frequency, pq := frequencyCounter(filename)
 	for char, count := range frequency {
 		fmt.Printf("%c: %d\n", char, count)
 	}
+	//  build tree using pq and root node
+	root := BuildTree(pq)
+
+	// Print the entire tree
+	PrintTree(root)
+
+	// extend to write to a prefix code table
+	//  which is a table with two headers character bits
 
 }
